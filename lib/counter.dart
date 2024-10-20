@@ -10,37 +10,53 @@ import 'package:provider_learning/counter_provider.dart';
 // }
 
 class HomePage extends StatelessWidget {
-
-  HomePage({super.key}); // private variable
+  const HomePage({super.key}); // private variable
   @override
   Widget build(BuildContext context) {
     print("Build function called");
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.red,
-        title: Center(child: Text("Provider",style: TextStyle(
-          fontWeight: FontWeight.bold,
-          fontSize: 20.0,
-          fontStyle: FontStyle.italic,
-        ),)),
+        title: Center(
+            child: Text(
+          "Provider",
+          style: TextStyle(
+            fontWeight: FontWeight.bold,
+            fontSize: 20.0,
+            fontStyle: FontStyle.italic,
+          ),
+        )),
       ),
-        body: Center(
-          child:Consumer<CounterProvider>(
-            builder: (ctx, _, __){
-
-          return Text('${Provider.of<CounterProvider>(ctx, listen: true).getCount()}',style: TextStyle(
-            fontSize: 25.0,
-          ));
-          })
-          
-        
-        ),
-        floatingActionButton: FloatingActionButton(
-          onPressed:(){
-            //! <inside this two greater and less sign denote the type of or which type of provider is provide>
-            Provider.of<CounterProvider>(context,listen: false).incrementCount();
-          },child: Icon(Icons.add),
-           ),
-      );
+      body: Center(child: Consumer<CounterProvider>(builder: (ctx, _, __) {
+        // return Text('${Provider.of<CounterProvider>(ctx, listen: true).getCount()}',style: TextStyle(
+        //   fontSize: 25.0,
+        // ));
+        return Text('${context.watch<CounterProvider>().getCount()}',
+            style: TextStyle(
+              fontSize: 25.0,
+            ));
+      })),
+      floatingActionButton: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        children: [
+          FloatingActionButton(
+            onPressed: () {
+              //! <inside this two greater and less sign denote the type of or which type of provider is provide>
+              //Provider.of<CounterProvider>(context,listen: false).incrementCount();
+              context.read<CounterProvider>().decrementCount();
+            },
+            child: Icon(Icons.remove),
+          ),
+          FloatingActionButton(
+            onPressed: () {
+              //! <inside this two greater and less sign denote the type of or which type of provider is provide>
+              //Provider.of<CounterProvider>(context,listen: false).incrementCount();
+              context.read<CounterProvider>().incrementCount(5);
+            },
+            child: Icon(Icons.add),
+          ),
+        ],
+      ),
+    );
   }
 }

@@ -6,9 +6,9 @@ class CounterProvider extends ChangeNotifier {
   // get value
   int getCount()=> _count;
   //! events
-  void incrementCount() {
-    _count++;
-    notifyListeners();
+  void incrementCount(int value) {
+    _count+=value;
+    notifyListeners(); 
   }
 
   void decrementCount() {
